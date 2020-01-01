@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<Actions>
+    <Action id="processPrintZoneSummary" uiPath="DeviceActions">
+        <Name>Print Zone Summary</Name>
+        <CallbackMethod>processPrintZoneSummary</CallbackMethod>
+    </Action>
+    <Action id="play" deviceFilter="self.roonZone" uiPath="DeviceActions">
+        <Name>Play</Name>
+        <CallbackMethod>processPlay</CallbackMethod>
+    </Action>
+    <Action id="pause" deviceFilter="self.roonZone" uiPath="DeviceActions">
+        <Name>Pause</Name>
+        <CallbackMethod>processPause</CallbackMethod>
+    </Action>
+    <Action id="playPause" deviceFilter="self.roonZone" uiPath="DeviceActions">
+        <Name>Play|Pause [Toggle]</Name>
+        <CallbackMethod>processPlayPause</CallbackMethod>
+    </Action>
+    <Action id="stop" deviceFilter="self.roonZone" uiPath="DeviceActions">
+        <Name>Stop</Name>
+        <CallbackMethod>processStop</CallbackMethod>
+    </Action>
+    <Action id="previous" deviceFilter="self.roonZone" uiPath="DeviceActions">
+        <Name>Previous</Name>
+        <CallbackMethod>processPrevious</CallbackMethod>
+    </Action>
+    <Action id="next" deviceFilter="self.roonZone" uiPath="DeviceActions">
+        <Name>Next</Name>
+        <Description>Advance to the next track</Description>
+        <CallbackMethod>processNext</CallbackMethod>
+    </Action>
+    <Action id="mute" deviceFilter="self.roonZone" uiPath="DeviceActions">
+        <Name>Mute [Toggle]</Name>
+        <Description>Mute/unmute a Zone</Description>
+        <CallbackMethod>processMute</CallbackMethod>
+    </Action>
+    <Action id="muteAll" uiPath="DeviceActions">
+        <Name>Mute All</Name>
+        <Description>Mute/Unmute all Zones</Description>
+        <CallbackMethod>processMuteAll</CallbackMethod>
+    </Action>
+    <Action id="setVolume" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
+        <ConfigUI>
+            <Field id="volumePercentage" type="textfield" defaultValue="10">
+                <Label>Volume [Percentage]:</Label>
+            </Field>
+            <Field id="volumePercentage-Help" type="label" alignWithControl="true" alwaysUseInDialogHeightCalc="true">
+                <Label>^ Specify the Output Volume [0 - 100].</Label>
+            </Field>
+        </ConfigUI>
+        <Name>Set Volume</Name>
+        <Description>Set Volume</Description>
+        <CallbackMethod>processVolumeSet</CallbackMethod>
+    </Action>
+    <Action id="increaseVolume" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
+        <ConfigUI>
+            <Field id="volumeIncrease" type="textfield" defaultValue="1">
+                <Label>Volume Increase [Percentage Increment]:</Label>
+            </Field>
+            <Field id="volumeIncrease-Help" type="label" alignWithControl="true" alwaysUseInDialogHeightCalc="true">
+                <Label>^ Specify the value to increase the Output Volume by [1 - 10].</Label>
+            </Field>
+        </ConfigUI>
+        <Name>Increase Volume</Name>
+        <Description>Increase Volume</Description>
+        <CallbackMethod>processVolumeIncrease</CallbackMethod>
+    </Action>
+    <Action id="decreaseVolume" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
+        <ConfigUI>
+            <Field id="volumeDecrease" type="textfield" defaultValue="1">
+                <Label>Volume Decrease [Percentage Increment]:</Label>
+            </Field>
+            <Field id="volumeDecrease-Help" type="label" alignWithControl="true" alwaysUseInDialogHeightCalc="true">
+                <Label>^ Specify the value to decrease the Output Volume by [1 - 10].</Label>
+            </Field>
+        </ConfigUI>
+        <Name>Decrease Volume</Name>
+        <Description>Decrease Volume</Description>
+        <CallbackMethod>processVolumeDecrease</CallbackMethod>
+    </Action>
+    <Action id="groupOutputs" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
+        <ConfigUI>
+            <Field id="roonOutputToGroupTo" type="textfield"  defaultValue="" readonly="true" alwaysUseInDialogHeightCalc="true">
+                <Label>Lead Roon Output:</Label>
+            </Field>
+            <Field id="roonOutputToGroupToHelp" type="label" fontColor="grey" alignWithControl="true">
+                <Label>^ This is the Roon Output that you will add the Roon Outputs you select below to form a new Roon Zone (group).</Label>
+            </Field>
+            <Field id="roonOutputsList" type="list" readonly="YES" rows="5">
+                <Label>Roon Outputs:</Label>
+                <List class="self" method="_supplyAvailableRoonOutputsList" dynamicReload="true"/>
+            </Field>
+
+            <Field id="roonOutputsListHelp" type="label" fontColor="blue" alignWithControl="true">
+                <Label>^ Select one or more of the above Roon Outputs  to group with the Lead Roon Output to form a new Roon Zone (group) by using CMD Click.</Label>
+            </Field>
+
+            <Field id="separator-1" type="separator" alwaysUseInDialogHeightCalc="true"/>
+            <Field type="checkbox" id="forceGroupAction" default="true">
+                <Label>Force Group Action:</Label>
+                <Description>Check to force group to happen.</Description>
+            </Field>
+            <Field id="forceGroupActionHelp" type="label" fontColor="blue" alignWithControl="true">
+                <Label>^ This will force the Group action to take place regardless as to whether an output is already in a Roon Zone group. The already grouped Output will be "ungrouped" from its existing Roon Zone group.</Label>
+            </Field>
+        </ConfigUI>
+        <Name>Group Outputs</Name>
+        <Description>Group Outputs</Description>
+        <CallbackMethod>processGroupOutputs</CallbackMethod>
+    </Action>
+
+</Actions>

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<PluginConfig>
+    <SupportURL>https://forums.indigodomo.com/viewforum.php?f=294</SupportURL>
+    <Field id="description" type="label" alwaysUseInDialogHeightCalc="true">
+        <Label>This Plugin controls a Roon audio system. 😄</Label>
+    </Field>
+    <Field id="copyright" type="label" alwaysUseInDialogHeightCalc="true">
+        <Label>Copyright © 2019 Autolog</Label>
+    </Field>
+    <Field id="separator-1" type="separator" alwaysUseInDialogHeightCalc="true"/> 
+    <Field id="header-1" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+        <Label>ROON CORE CONNECTION</Label>
+    </Field>
+
+    <Field id="roonCoreIpAddress" type="textfield" defaultValue="" alwaysUseInDialogHeightCalc="true">
+        <Label>Roon Core IP Address:</Label>
+    </Field>
+    <Field id="help-1" type="label" alignWithControl="true" alwaysUseInDialogHeightCalc="true">
+        <Label> ^ Specify the IP Address of the device running the Roon Core e.g. 192.168.0.20.</Label>
+    </Field>
+
+<!--     <Field id="roonCorePort" type="textfield" defaultValue="">
+        <Label>Roon Core Port:</Label>
+    </Field>
+    <Field id="help-1B" type="label" alignWithControl="true">
+        <Label> ^ Specify the Port to connect to on the device running the Roon Core.</Label>
+    </Field>
+ -->
+    <Field id="separator-2" type="separator"/>  
+
+
+    <Field id="roonVariableFolderName" type="textfield" defaultValue="Roon">
+        <Label>Variable Folder Name:</Label>
+    </Field>
+    <Field id="help-2" type="label" alignWithControl="true">
+        <Label> ^ Specify the name of the Indigo folder in which the plugin will list any pre-defined Roon now playing variables when editing a Roon device. Leave empty if the folder is not required. The default variable folder is 'ROON' and if required and missing, will be created.</Label>
+    </Field>
+
+    <Field id="separator-3" type="separator"/>  
+    <Field id="header-3" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+        <Label>DEVICE AUTO-CREATE</Label>
+    </Field>
+    <Field type="checkbox" id="autoCreateDevices" default="false" alwaysUseInDialogHeightCalc="true">
+        <Label>Auto-Create:</Label>
+        <Description>Enable automatic Roon Zone and Output device creation.</Description>
+    </Field>
+    <Field id="roonDeviceFolderName" type="textfield" defaultValue="Roon" alwaysUseInDialogHeightCalc="true">
+        <Label>Device Folder Name:</Label>
+    </Field>
+    <Field id="help-3" type="label" alignWithControl="true">
+        <Label> ^ Specify the name of the Indigo folder in which the plugin will create any Roon Zone or Roon Output devices, if DEVICE AUTO-CREATE is enabled. Default is 'Roon'.</Label>
+    </Field>
+
+    <Field id="separator-4" type="separator"/>  
+    <Field id="header-4" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+        <Label>Grouped Zones Dynamic-Rename</Label>
+    </Field>
+    <Field type="checkbox" id="dynamicGroupedZonesRename" default="true" alwaysUseInDialogHeightCalc="true">
+        <Label>Dynamic-Rename:</Label>
+        <Description>Enable dynamic renaming of grouped Roon Zones.</Description>
+    </Field>
+    <Field id="help-4" type="label" alignWithControl="true">
+        <Label> ^ This will dynamically rename an Indigo Roon Zone device which represents a group of Roon Outputs when the underlying Roon Zone display name changes. The device will be renamed to the lead Output in the group e.g. 'Roon Zone - Living Room + 1'. Default is checked (True).</Label>
+    </Field>
+
+    <Field id="separator-5" type="separator" alwaysUseInDialogHeightCalc="true"/>  
+    <Field id="header-5" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+        <Label>DEBUG LOGGING</Label>
+    </Field>
+
+    <Field type="checkbox" id="debugEnabled" default="false" alwaysUseInDialogHeightCalc="true">
+        <Label>Debugging:</Label>
+        <Description>Enable debug logging.</Description>
+    </Field>
+
+     <Field id="help-5" type="label" alignWithControl="true" visibleBindingId="debugEnabled" visibleBindingValue="true" alwaysUseInDialogHeightCalc="true">
+        <Label>^ Select the debug logging to be performed by ticking the required logging option(s) below.</Label>
+    </Field>
+    <Field type="checkbox" id="debugGeneral" defaultValue="false"  visibleBindingId="debugEnabled" visibleBindingValue="true" tooltip="Enable logging of general debugging info." alwaysUseInDialogHeightCalc="true">
+        <Label>General:</Label>
+        <Description>Enable debug logging of General processing.</Description>
+    </Field>
+<!--     <Field type="checkbox" id="debugRoonHandler" defaultValue="false"  visibleBindingId="debugEnabled" visibleBindingValue="true" tooltip="Enable logging of Roon Handler debugging info." alwaysUseInDialogHeightCalc="true">
+        <Label>Roon Handler:</Label>
+        <Description>Enable debug logging of Roon Handler processing.</Description>
+    </Field>
+ -->    <Field type="checkbox" id="debugMethodTrace" default="false" visibleBindingId="debugEnabled" visibleBindingValue="true" tooltip="Enable method tracing.">
+        <Label>Method Trace:</Label>
+        <Description>Enable Method Trace debug logging.</Description>
+    </Field>
+
+</PluginConfig>

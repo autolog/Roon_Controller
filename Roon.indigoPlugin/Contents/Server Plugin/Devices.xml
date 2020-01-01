@@ -1,0 +1,385 @@
+<?xml version="1.0"?>
+
+<Devices>
+    <Device type="custom" id="roonZone">
+        <Name>Roon Zone</Name>
+        <ConfigUI>
+            <Field id="header-1" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+                <Label>ROON ZONE SELECTION</Label>
+            </Field>
+            <Field id="roonZoneUniqueIdentityKey" type="menu" defaultValue="+" dynamicReload="true" alwaysUseInDialogHeightCalc="true">
+                <Label>Roon Zone:</Label>
+                <List class="self" method="listRoonZoneUniqueIdentityKeys"/>
+                <CallbackMethod>roonZoneUniqueIdentityKeySelected</CallbackMethod>
+            </Field>
+            <Field id="roonZoneUniqueIdentityKeyUi" type="textfield" readonly="true" dynamicReload="true">
+                <Label>Unique Identity Key:</Label>
+            </Field>
+        <Field type="checkbox" id="autoNameNewRoonZone" default="true">
+            <Label>Auto name:</Label>
+            <Description>Check to automatically name new device.</Description>
+        </Field>
+
+        <Field type="checkbox" id="dynamicGroupedZoneRename" default="false">
+            <Label>Dynamic Grouped Zone Rename:</Label>
+            <Description>Check to dynamically rename Indigo grouped Roon Zone device when Roon changes the Zone name (only applied to a grouped Zone).</Description>
+        </Field>
+
+        </ConfigUI>
+        <States>
+            <State id="zone_connected">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Zone Connected Changed</TriggerLabel>
+                <ControlPageLabel>Zone Connected</ControlPageLabel>
+            </State>
+            <State id="zone_status">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Zone Status changed</TriggerLabel>
+                <ControlPageLabel>Zone Status</ControlPageLabel>
+            </State>
+            <State id="zone_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Zone Id changed</TriggerLabel>
+                <ControlPageLabel>Zone Id</ControlPageLabel>
+            </State>
+            <State id="queue_items_remaining">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Queue Items Remaining changed</TriggerLabel>
+                <ControlPageLabel>Queue Items Remaining</ControlPageLabel>
+            </State>
+            <State id="queue_time_remaining">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Queue Time Remaining changed</TriggerLabel>
+                <ControlPageLabel>Queue Time Remaining</ControlPageLabel>
+            </State>
+            <State id="display_name">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Display Name changed</TriggerLabel>
+                <ControlPageLabel>Display Name</ControlPageLabel>
+            </State>
+            <State id="auto_radio">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Auto Radio Changed</TriggerLabel>
+                <ControlPageLabel>Auto Radio</ControlPageLabel>
+            </State>
+            <State id="shuffle">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Shuffle Changed</TriggerLabel>
+                <ControlPageLabel>Shuffle</ControlPageLabel>
+            </State>
+            <State id="loop">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Loop changed</TriggerLabel>
+                <ControlPageLabel>Loop</ControlPageLabel>
+            </State>
+            <State id="number_of_outputs">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Number of Outputs changed</TriggerLabel>
+                <ControlPageLabel>Number of Outputs</ControlPageLabel>
+            </State>
+            <State id="output_1_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Output 1 Id changed</TriggerLabel>
+                <ControlPageLabel>Output 1 Id</ControlPageLabel>
+            </State>
+            <State id="output_2_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Output 2 Id changed</TriggerLabel>
+                <ControlPageLabel>Output 2 Id</ControlPageLabel>
+            </State>
+            <State id="output_3_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Output 3 Id changed</TriggerLabel>
+                <ControlPageLabel>Output 3 Id</ControlPageLabel>
+            </State>
+            <State id="output_4_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Output 4 Id changed</TriggerLabel>
+                <ControlPageLabel>Output 4 Id</ControlPageLabel>
+            </State>
+            <State id="output_5_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Output 5 Id changed</TriggerLabel>
+                <ControlPageLabel>Output 5 Id</ControlPageLabel>
+            </State>
+            <State id="number_of_artist_image_keys">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Number of Artist Image Keys changed</TriggerLabel>
+                <ControlPageLabel>Number of Artist Image Keys</ControlPageLabel>
+            </State>
+            <State id="artist_image_Key_1_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Artist Image Key 1 changed</TriggerLabel>
+                <ControlPageLabel>Artist Image Key 1</ControlPageLabel>
+            </State>
+            <State id="artist_image_Key_2_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Artist Image Key 2 changed</TriggerLabel>
+                <ControlPageLabel>Artist Image Key 2</ControlPageLabel>
+            </State>
+            <State id="artist_image_Key_3_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Artist Image Key 3 changed</TriggerLabel>
+                <ControlPageLabel>Artist Image Key 3</ControlPageLabel>
+            </State>
+            <State id="artist_image_Key_4_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Artist Image Key 4 changed</TriggerLabel>
+                <ControlPageLabel>Artist Image Key 4</ControlPageLabel>
+            </State>
+            <State id="artist_image_Key_5_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Artist Image Key 5 changed</TriggerLabel>
+                <ControlPageLabel>Artist Image Key 5</ControlPageLabel>
+            </State>
+            <State id="image_key">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Image Key changed</TriggerLabel>
+                <ControlPageLabel>Image Key</ControlPageLabel>
+            </State>
+
+            <State id="one_line_1">
+               <ValueType>String</ValueType>
+                <TriggerLabel>One Line 1 changed</TriggerLabel>
+                <ControlPageLabel>One Line 1</ControlPageLabel>
+            </State>
+            <State id="two_line_1">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Two Line 1 changed</TriggerLabel>
+                <ControlPageLabel>Two Line 1</ControlPageLabel>
+            </State>
+            <State id="two_line_2">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Two Line 2 changed</TriggerLabel>
+                <ControlPageLabel>Two Line 2</ControlPageLabel>
+            </State>
+            <State id="three_line_1">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Three Line 1 changed</TriggerLabel>
+                <ControlPageLabel>Three Line 1</ControlPageLabel>
+            </State>
+            <State id="three_line_2">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Three Line 2 changed</TriggerLabel>
+                <ControlPageLabel>Three Line 2</ControlPageLabel>
+            </State>
+            <State id="three_line_3">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Three Line 3 changed</TriggerLabel>
+                <ControlPageLabel>Three Line 3</ControlPageLabel>
+            </State>
+            <State id="length">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Length changed</TriggerLabel>
+                <ControlPageLabel>Length</ControlPageLabel>
+            </State>
+            <State id="seek_position">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Seek Position changed</TriggerLabel>
+                <ControlPageLabel>Seek Position</ControlPageLabel>
+            </State>
+            <State id="remaining">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Remaining changed</TriggerLabel>
+                <ControlPageLabel>Remaining</ControlPageLabel>
+            </State>
+            <State id="is_previous_allowed">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Is Previous Allowed Changed</TriggerLabel>
+                <ControlPageLabel>Is Previous Allowed</ControlPageLabel>
+            </State>
+            <State id="is_pause_allowed">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Is Pause Allowed Changed</TriggerLabel>
+                <ControlPageLabel>Is Pause Allowed</ControlPageLabel>
+            </State>
+            <State id="is_seek_allowed">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Is Seek Allowed Changed</TriggerLabel>
+                <ControlPageLabel>Is Seek Allowed</ControlPageLabel>
+            </State>
+            <State id="state">
+               <ValueType>String</ValueType>
+                <TriggerLabel>State Changed</TriggerLabel>
+                <ControlPageLabel>State</ControlPageLabel>
+            </State>
+            <State id="is_play_allowed">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Is Play Allowed Changed</TriggerLabel>
+                <ControlPageLabel>Is Play Allowed</ControlPageLabel>
+            </State>
+            <State id="is_next_allowed">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Is Next Allowed Changed</TriggerLabel>
+                <ControlPageLabel>Is Next Allowed</ControlPageLabel>
+            </State>
+            <State id="ui_queue_time_remaining">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Queue Time Remaining changed</TriggerLabel>
+                <ControlPageLabel>Queue Time Remaining</ControlPageLabel>
+            </State>
+            <State id="ui_length">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Length [UI] changed</TriggerLabel>
+                <ControlPageLabel>Length</ControlPageLabel>
+            </State>
+            <State id="ui_seek_position">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Seek Position [UI] changed</TriggerLabel>
+                <ControlPageLabel>Seek Position</ControlPageLabel>
+            </State>
+            <State id="ui_remaining">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Remaining [UI] changed</TriggerLabel>
+                <ControlPageLabel>Remaining</ControlPageLabel>
+            </State>
+
+        </States>
+        <UiDisplayStateId>zone_status</UiDisplayStateId>
+    </Device>
+
+    <Device type="custom" id="roonOutput">
+        <Name>Roon Output</Name>
+        <ConfigUI>
+            <Field id="header-1" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+                <Label>ROON OUTPUT SELECTION</Label>
+            </Field>
+            <Field id="roonOutputId" type="menu" dynamicReload="true" alwaysUseInDialogHeightCalc="true">
+                <Label>Roon Output:</Label>
+                <List class="self" method="listRoonOutputIds"/>
+                <CallbackMethod>roonOutputIdSelected</CallbackMethod>
+            </Field>
+            <Field id="roonOutputIdUi" type="textfield" defaultValue="" readonly="true" dynamicReload="true">
+                <Label>Roon Output Id:</Label>
+            </Field>
+        <Field type="checkbox" id="autoNameNewRoonOutput" default="true">
+            <Label>Auto name:</Label>
+            <Description>Check to automatically name new device.</Description>
+        </Field>
+
+        <Field id="nowPlayingVarId" type="menu" alwaysUseInDialogHeightCalc="true">
+            <Label>Now Playing Variable:</Label>
+            <List class="self" method="nowPlayingVariables" dynamicReload="true"/>
+        </Field>
+        </ConfigUI>
+        <States>
+            <State id="output_connected">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Output Connected Changed</TriggerLabel>
+                <ControlPageLabel>Output Connected</ControlPageLabel>
+            </State>
+            <State id="output_status">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Output Status changed</TriggerLabel>
+                <ControlPageLabel>Output Status</ControlPageLabel>
+            </State>
+            <State id="output_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Output Id changed</TriggerLabel>
+                <ControlPageLabel>Output Id</ControlPageLabel>
+            </State>
+            <State id="display_name">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Display Name changed</TriggerLabel>
+                <ControlPageLabel>Display Name</ControlPageLabel>
+            </State>
+            <State id="zone_id">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Zone Id changed</TriggerLabel>
+                <ControlPageLabel>Zone Id</ControlPageLabel>
+            </State>
+            <State id="source_control_1_status">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Source Control 1 Status changed</TriggerLabel>
+                <ControlPageLabel>Source Control 1 Status</ControlPageLabel>
+            </State>
+            <State id="source_control_1_display_name">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Source Control 1 Display Name changed</TriggerLabel>
+                <ControlPageLabel>Source Control 1 Display Name</ControlPageLabel>
+            </State>
+            <State id="source_control_1_control_key">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Source Control 1 Control Key changed</TriggerLabel>
+                <ControlPageLabel>Source Control 1 Control Key</ControlPageLabel>
+            </State>
+            <State id="source_control_1_supports_standby">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Source Control 1 Supports Standby changed</TriggerLabel>
+                <ControlPageLabel>Source Control 1 Supports Standby</ControlPageLabel>
+            </State>
+
+            <State id="volume_hard_limit_min">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Volume Hard Limit Min changed</TriggerLabel>
+                <ControlPageLabel>Volume Hard Limit Min</ControlPageLabel>
+            </State>
+            <State id="volume_min">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Volume Min changed</TriggerLabel>
+                <ControlPageLabel>Volume Min</ControlPageLabel>
+            </State>
+            <State id="volume_is_muted">
+                <ValueType boolType="TrueFalse">Boolean</ValueType>
+                <TriggerLabel>Volume Is Muted Changed</TriggerLabel>
+                <ControlPageLabel>Volume Is Muted</ControlPageLabel>
+            </State>
+            <State id="volume_max">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Volume Max changed</TriggerLabel>
+                <ControlPageLabel>Volume Max</ControlPageLabel>
+            </State>
+            <State id="volume_value">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Volume Value changed</TriggerLabel>
+                <ControlPageLabel>Volume Value</ControlPageLabel>
+            </State>
+            <State id="volume_step">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Volume Step changed</TriggerLabel>
+                <ControlPageLabel>Volume Step</ControlPageLabel>
+            </State>
+            <State id="volume_hard_limit_max">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Volume Hard Limit Max changed</TriggerLabel>
+                <ControlPageLabel>Volume Hard Limit Max</ControlPageLabel>
+            </State>
+            <State id="volume_soft_limit">
+               <ValueType>Number</ValueType>
+                <TriggerLabel>Volume Soft Limit changed</TriggerLabel>
+                <ControlPageLabel>Volume Soft Limit</ControlPageLabel>
+            </State>
+            <State id="volume_type">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Volume Type changed</TriggerLabel>
+                <ControlPageLabel>Volume Type</ControlPageLabel>
+            </State>
+            <State id="can_group_with_output_id_1">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Can Group With Output Id 1 changed</TriggerLabel>
+                <ControlPageLabel>Can Group With Output Id 1</ControlPageLabel>
+            </State>
+            <State id="can_group_with_output_id_2">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Can Group With Output Id 2 changed</TriggerLabel>
+                <ControlPageLabel>Can Group With Output Id 3</ControlPageLabel>
+            </State>
+            <State id="can_group_with_output_id_3">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Can Group With Output Id 3 changed</TriggerLabel>
+                <ControlPageLabel>Can Group With Output Id 3</ControlPageLabel>
+            </State>
+            <State id="can_group_with_output_id_4">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Can Group With Output Id 4 changed</TriggerLabel>
+                <ControlPageLabel>Can Group With Output Id 4</ControlPageLabel>
+            </State>
+            <State id="can_group_with_output_id_5">
+               <ValueType>String</ValueType>
+                <TriggerLabel>Can Group With Output Id 5 changed</TriggerLabel>
+                <ControlPageLabel>Can Group With Output Id 5</ControlPageLabel>
+            </State>
+        </States>
+        <UiDisplayStateId>output_status</UiDisplayStateId>
+    </Device>
+</Devices>
