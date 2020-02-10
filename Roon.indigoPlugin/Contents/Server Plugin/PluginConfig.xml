@@ -56,8 +56,8 @@
         <Label>Grouped Zones Dynamic-Rename</Label>
     </Field>
     <Field type="checkbox" id="dynamicGroupedZonesRename" default="true" alwaysUseInDialogHeightCalc="true">
-        <Label>Dynamic-Rename:</Label>
-        <Description>Enable dynamic renaming of grouped Roon Zones.</Description>
+        <Label>Dynamic-Rename Default:</Label>
+        <Description>Default setting to enable dynamic renaming of grouped Roon Zones. Can be overridden in the Zone Device settings.</Description>
     </Field>
     <Field id="help-4" type="label" alignWithControl="true">
         <Label> ^ This will dynamically rename an Indigo Roon Zone device which represents a group of Roon Outputs when the underlying Roon Zone display name changes. The device will be renamed to the lead Output in the group e.g. 'Roon Zone - Living Room + 1'. Default is checked (True).</Label>

@@ -229,7 +229,7 @@ class Plugin(indigo.PluginBase):
             self.processOutputs(self.globals['roon']['outputs'])
             self.processZones(self.globals['roon']['zones'])
 
-            self.printKnownZonesSummary('INITIALISATION')
+            # self.printKnownZonesSummary('INITIALISATION')
 
             self.general_logger.info(u'\'Roon Controller\' initialization complete.')
 
@@ -480,21 +480,21 @@ class Plugin(indigo.PluginBase):
 
         try:
             if self.globals['config']['printZonesSummary']:
-                logout = '\n#################### {} ####################'.format(title)
-                logout = logout + '\nInternal Zone table\n'
+                logout = u'\n#################### {} ####################'.format(title)
+                logout = logout + u'\nInternal Zone table\n'
                 for zone_id in self.globals['roon']['zones']:
                     if 'display_name' in self.globals['roon']['zones'][zone_id]:
                         zone_display_name = self.globals['roon']['zones'][zone_id]['display_name']
                     else:
                         zone_display_name = 'NONE'
-                    logout = logout + '\nZone \'{}\' - Zone ID = \'{}\''.format(zone_display_name, zone_id)
-                logout = logout + '\nIndigo Zone Devices\n'
+                    logout = logout + u'\nZone \'{}\' - Zone ID = \'{}\''.format(zone_display_name, zone_id)
+                logout = logout + u'\nIndigo Zone Devices\n'
                 for dev in indigo.devices.iter("self"):
                     if dev.deviceTypeId == 'roonZone':
                         zone_id = dev.pluginProps.get('roonZoneId', '-- Zone ID not set!')
-                        logout = logout + '\nIndigo Device \'{}\' - Zone ID = \'{}\', Status =  \'{}\''.format(dev.name, zone_id, dev.states['zone_status'])
-                logout = logout + '\n####################\n'
-                self.general_logger.debug(logout)
+                        logout = logout + u'\nIndigo Device \'{}\' - Zone ID = \'{}\', Status =  \'{}\''.format(dev.name, zone_id, dev.states['zone_status'])
+                logout = logout + u'\n####################\n'
+                self.general_logger.info(logout)
 
         except StandardError as e:
             self.general_logger.error(u'\'printKnownZonesSummary\' error detected. Line \'{}\' has error=\'{}\''.format(sys.exc_traceback.tb_lineno, e))   
@@ -598,7 +598,7 @@ class Plugin(indigo.PluginBase):
         if self.globals['debug']['methodTraceActive']: self.method_tracer.threaddebug(u'Method Start: Line {}'.format(inspect.currentframe().f_lineno))
 
         try:
-            self.printKnownZonesSummary('PROCESS ZONES CHANGED')
+            # self.printKnownZonesSummary('PROCESS ZONES CHANGED')
 
             for zone_id in changed_items:
 
@@ -623,7 +623,7 @@ class Plugin(indigo.PluginBase):
         if self.globals['debug']['methodTraceActive']: self.method_tracer.threaddebug(u'Method Start: Line {}'.format(inspect.currentframe().f_lineno))
 
         try:
-            self.printKnownZonesSummary('PROCESS ZONES ADDED')
+            # self.printKnownZonesSummary('PROCESS ZONES ADDED')
 
             for zone_id in changed_items:
                 zoneData = copy.deepcopy(self.globals['roon']['api'].zone_by_zone_id(zone_id))
@@ -707,7 +707,7 @@ class Plugin(indigo.PluginBase):
 
         try:
             self.general_logger.debug(u'\'ZONE REMOVED\' INVOKED')
-            self.printKnownZonesSummary('PROCESS ZONES REMOVED [START]')
+            # self.printKnownZonesSummary('PROCESS ZONES REMOVED [START]')
             
             for zone_id in changed_items:
                 zone_display_name = 'Unknown Zone'
@@ -730,7 +730,7 @@ class Plugin(indigo.PluginBase):
 
                     del self.globals['roon']['zones'][zone_id]
 
-                    self.printKnownZonesSummary('PROCESS ZONES REMOVED [ZONE REMOVED]')
+                    # self.printKnownZonesSummary('PROCESS ZONES REMOVED [ZONE REMOVED]')
 
                 else:
                     self.general_logger.debug(u'\'processZonesRemoved\' - All Zones:\n{}'.format(self.globals['roon']['zones']))
@@ -2069,8 +2069,9 @@ class Plugin(indigo.PluginBase):
 
     def didDeviceCommPropertyChange(self, origDev, newDev):
         if origDev.deviceTypeId == 'roonZone':
-            if origDev.pluginProps['dynamicGroupedZoneRename'] != newDev.pluginProps['dynamicGroupedZoneRename']:
-                return True
+            if 'dynamicGroupedZoneRename' in origDev.pluginProps:
+                if origDev.pluginProps['dynamicGroupedZoneRename'] != newDev.pluginProps['dynamicGroupedZoneRename']:
+                    return True
         return False
 
     def deviceStartComm(self, dev):
@@ -2098,6 +2099,14 @@ class Plugin(indigo.PluginBase):
                             dev.replacePluginPropsOnServer(devPluginProps)
 
                             break
+
+                try:
+                    sharedProps = dev.sharedProps
+                    sharedProps["sqlLoggerIgnoreStates"] = "queue_time_remaining, remaining, seek_position, ui_queue_time_remaining, ui_remaining, ui_seek_position"
+                    dev.replaceSharedPropsOnServer(sharedProps)
+                except:
+                    pass
+
 
                 if zone_dev.address[0:5] != 'ZONE-':
                     # At this point it is a brand new Roon Zone device as address not setup
@@ -2481,20 +2490,20 @@ class Plugin(indigo.PluginBase):
                         image_to_process.save(output_image_file)
                         try:
                             os.remove(work_file)
-                        except:  # Not sure why this doesn't work!
+                        except:  # Not sure why this doesn't always work!
                             pass
                         set_default_image = False
                     except StandardError as err:
-                        # leave as defaut image if any problem reported but only output debug message
+                        # leave as default image if any problem reported but only output debug message
                         self.general_logger.debug(u'\'processImage\' [DEBUG ONLY] error detected. Line \'{}\' has error: \'{}\''.format(sys.exc_traceback.tb_lineno, err))  
             if set_default_image:
                 default_image_path = '{}/Plugins/Roon.indigoPlugin/Contents/Resources/'.format(self.globals['pluginInfo']['path'])
                 if image_type == ARTIST:
-                    default_image_file = '{}/Artist_Image.png'.format(default_image_path)
+                    default_image_file = '{}Artist_Image.png'.format(default_image_path)
                 elif image_type == ALBUM:
-                    default_image_file = '{}/Album_Image.png'.format(default_image_path)
+                    default_image_file = '{}Album_Image.png'.format(default_image_path)
                 else:
-                    default_image_file = '{}/Unknown_Image.png'.format(default_image_path)
+                    default_image_file = '{}Unknown_Image.png'.format(default_image_path)
                 output_image_file = '{}/{}/{}.png'.format(self.globals['roon']['pluginPrefsFolder'], zone_dev.address, image_name)
                 copyfile(default_image_file, output_image_file)
 

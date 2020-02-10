@@ -37,7 +37,7 @@
     </Action>
     <Action id="muteAll" uiPath="DeviceActions">
         <Name>Mute All</Name>
-        <Description>Mute/Unmute all Zones</Description>
+        <Description>Mute all Zones</Description>
         <CallbackMethod>processMuteAll</CallbackMethod>
     </Action>
     <Action id="setVolume" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
