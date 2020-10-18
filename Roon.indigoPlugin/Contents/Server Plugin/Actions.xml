@@ -1,44 +1,44 @@
 <?xml version="1.0"?>
 
 <Actions>
-    <Action id="processPrintZoneSummary" uiPath="DeviceActions">
+    <Action id="print_zone_summary" uiPath="DeviceActions">
         <Name>Print Zone Summary</Name>
-        <CallbackMethod>processPrintZoneSummary</CallbackMethod>
+        <CallbackMethod>print_zone_summary</CallbackMethod>
     </Action>
     <Action id="play" deviceFilter="self.roonZone" uiPath="DeviceActions">
         <Name>Play</Name>
-        <CallbackMethod>processPlay</CallbackMethod>
+        <CallbackMethod>process_playback_control_play</CallbackMethod>
     </Action>
     <Action id="pause" deviceFilter="self.roonZone" uiPath="DeviceActions">
         <Name>Pause</Name>
-        <CallbackMethod>processPause</CallbackMethod>
+        <CallbackMethod>process_playback_control_pause</CallbackMethod>
     </Action>
     <Action id="playPause" deviceFilter="self.roonZone" uiPath="DeviceActions">
         <Name>Play|Pause [Toggle]</Name>
-        <CallbackMethod>processPlayPause</CallbackMethod>
+        <CallbackMethod>process_playback_control_play_pause</CallbackMethod>
     </Action>
     <Action id="stop" deviceFilter="self.roonZone" uiPath="DeviceActions">
         <Name>Stop</Name>
-        <CallbackMethod>processStop</CallbackMethod>
+        <CallbackMethod>process_playback_control_stop</CallbackMethod>
     </Action>
     <Action id="previous" deviceFilter="self.roonZone" uiPath="DeviceActions">
         <Name>Previous</Name>
-        <CallbackMethod>processPrevious</CallbackMethod>
+        <CallbackMethod>process_playback_control_previous</CallbackMethod>
     </Action>
     <Action id="next" deviceFilter="self.roonZone" uiPath="DeviceActions">
         <Name>Next</Name>
         <Description>Advance to the next track</Description>
-        <CallbackMethod>processNext</CallbackMethod>
+        <CallbackMethod>process_playback_control_next</CallbackMethod>
     </Action>
     <Action id="mute" deviceFilter="self.roonZone" uiPath="DeviceActions">
         <Name>Mute [Toggle]</Name>
         <Description>Mute/unmute a Zone</Description>
-        <CallbackMethod>processMute</CallbackMethod>
+        <CallbackMethod>process_playback_control_mute</CallbackMethod>
     </Action>
     <Action id="muteAll" uiPath="DeviceActions">
         <Name>Mute All</Name>
         <Description>Mute all Zones</Description>
-        <CallbackMethod>processMuteAll</CallbackMethod>
+        <CallbackMethod>process_playback_control_mute_all</CallbackMethod>
     </Action>
     <Action id="setVolume" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
         <ConfigUI>
@@ -51,7 +51,7 @@
         </ConfigUI>
         <Name>Set Volume</Name>
         <Description>Set Volume</Description>
-        <CallbackMethod>processVolumeSet</CallbackMethod>
+        <CallbackMethod>process_playback_control_volume_set</CallbackMethod>
     </Action>
     <Action id="increaseVolume" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
         <ConfigUI>
@@ -64,7 +64,7 @@
         </ConfigUI>
         <Name>Increase Volume</Name>
         <Description>Increase Volume</Description>
-        <CallbackMethod>processVolumeIncrease</CallbackMethod>
+        <CallbackMethod>process_playback_control_volume_increase</CallbackMethod>
     </Action>
     <Action id="decreaseVolume" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
         <ConfigUI>
@@ -77,7 +77,7 @@
         </ConfigUI>
         <Name>Decrease Volume</Name>
         <Description>Decrease Volume</Description>
-        <CallbackMethod>processVolumeDecrease</CallbackMethod>
+        <CallbackMethod>process_playback_control_volume_decrease</CallbackMethod>
     </Action>
     <Action id="groupOutputs" deviceFilter="self.roonOutput" uiPath="DeviceActions" alwaysUseInDialogHeightCalc="true">
         <ConfigUI>
@@ -89,7 +89,7 @@
             </Field>
             <Field id="roonOutputsList" type="list" readonly="YES" rows="5">
                 <Label>Roon Outputs:</Label>
-                <List class="self" method="_supplyAvailableRoonOutputsList" dynamicReload="true"/>
+                <List class="self" method="supply_available_roon_outputs_list" dynamicReload="true"/>
             </Field>
 
             <Field id="roonOutputsListHelp" type="label" fontColor="blue" alignWithControl="true">
@@ -107,7 +107,7 @@
         </ConfigUI>
         <Name>Group Outputs</Name>
         <Description>Group Outputs</Description>
-        <CallbackMethod>processGroupOutputs</CallbackMethod>
+        <CallbackMethod>process_group_outputs</CallbackMethod>
     </Action>
 
 </Actions>

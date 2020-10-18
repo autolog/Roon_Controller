@@ -33,7 +33,7 @@
         <Label>Variable Folder Name:</Label>
     </Field>
     <Field id="help-2" type="label" alignWithControl="true">
-        <Label> ^ Specify the name of the Indigo folder in which the plugin will list any pre-defined Roon now playing variables when editing a Roon device. Leave empty if the folder is not required. The default variable folder is 'ROON' and if required and missing, will be created.</Label>
+        <Label> ^ Specify the name of the Indigo folder in which the plugin will list any pre-defined Roon now playing variables when editing a Roon device. Leave empty if the folder is not required. The default variable folder is 'Roon' and if required and missing, will be created.</Label>
     </Field>
 
     <Field id="separator-3" type="separator"/>  
@@ -64,29 +64,32 @@
     </Field>
 
     <Field id="separator-5" type="separator" alwaysUseInDialogHeightCalc="true"/>  
-    <Field id="header-5" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
-        <Label>DEBUG LOGGING</Label>
+    <Field id="header-5" type="label"  fontColor="blue" alwaysUseInDialogHeightCalc="true">
+        <Label>LOGGING LEVELS</Label>
     </Field>
 
-    <Field type="checkbox" id="debugEnabled" default="false" alwaysUseInDialogHeightCalc="true">
-        <Label>Debugging:</Label>
-        <Description>Enable debug logging.</Description>
-    </Field>
+	<Field id="eventLogLevel" type="menu" defaultValue="20" alwaysUseInDialogHeightCalc="true">
+		<Label>Indigo Event Log:</Label>
+		<List>
+			<Option value="5">Verbose Debugging Messages</Option>
+			<Option value="10">Debugging Messages</Option>
+			<Option value="20">Informational Messages</Option>
+			<Option value="30">Warning Messages</Option>
+			<Option value="40">Error Messages</Option>
+			<Option value="50">Critical Errors Only</Option>
+		</List>
+	</Field>
 
-     <Field id="help-5" type="label" alignWithControl="true" visibleBindingId="debugEnabled" visibleBindingValue="true" alwaysUseInDialogHeightCalc="true">
-        <Label>^ Select the debug logging to be performed by ticking the required logging option(s) below.</Label>
-    </Field>
-    <Field type="checkbox" id="debugGeneral" defaultValue="false"  visibleBindingId="debugEnabled" visibleBindingValue="true" tooltip="Enable logging of general debugging info." alwaysUseInDialogHeightCalc="true">
-        <Label>General:</Label>
-        <Description>Enable debug logging of General processing.</Description>
-    </Field>
-<!--     <Field type="checkbox" id="debugRoonHandler" defaultValue="false"  visibleBindingId="debugEnabled" visibleBindingValue="true" tooltip="Enable logging of Roon Handler debugging info." alwaysUseInDialogHeightCalc="true">
-        <Label>Roon Handler:</Label>
-        <Description>Enable debug logging of Roon Handler processing.</Description>
-    </Field>
- -->    <Field type="checkbox" id="debugMethodTrace" default="false" visibleBindingId="debugEnabled" visibleBindingValue="true" tooltip="Enable method tracing.">
-        <Label>Method Trace:</Label>
-        <Description>Enable Method Trace debug logging.</Description>
-    </Field>
+	<Field id="pluginLogLevel" type="menu" defaultValue="20" alwaysUseInDialogHeightCalc="true">
+		<Label>Plugin Event Log:</Label>
+		<List>
+			<Option value="5">Verbose Debugging Messages</Option>
+			<Option value="10">Debugging Messages</Option>
+			<Option value="20">Informational Messages</Option>
+			<Option value="30">Warning Messages</Option>
+			<Option value="40">Error Messages</Option>
+			<Option value="50">Critical Errors Only</Option>
+		</List>
+	</Field>
 
 </PluginConfig>

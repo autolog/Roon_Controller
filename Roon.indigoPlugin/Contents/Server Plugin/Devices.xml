@@ -9,8 +9,8 @@
             </Field>
             <Field id="roonZoneUniqueIdentityKey" type="menu" defaultValue="+" dynamicReload="true" alwaysUseInDialogHeightCalc="true">
                 <Label>Roon Zone:</Label>
-                <List class="self" method="listRoonZoneUniqueIdentityKeys"/>
-                <CallbackMethod>roonZoneUniqueIdentityKeySelected</CallbackMethod>
+                <List class="self" method="list_roon_zone_unique_identity_keys"/>
+                <CallbackMethod>roon_zone_unique_identity_key_selected</CallbackMethod>
             </Field>
             <Field id="roonZoneUniqueIdentityKeyUi" type="textfield" readonly="true" dynamicReload="true">
                 <Label>Unique Identity Key:</Label>
@@ -246,8 +246,8 @@
             </Field>
             <Field id="roonOutputId" type="menu" dynamicReload="true" alwaysUseInDialogHeightCalc="true">
                 <Label>Roon Output:</Label>
-                <List class="self" method="listRoonOutputIds"/>
-                <CallbackMethod>roonOutputIdSelected</CallbackMethod>
+                <List class="self" method="list_roon_output_ids"/>
+                <CallbackMethod>roon_output_id_selected</CallbackMethod>
             </Field>
             <Field id="roonOutputIdUi" type="textfield" defaultValue="" readonly="true" dynamicReload="true">
                 <Label>Roon Output Id:</Label>
@@ -259,7 +259,7 @@
 
         <Field id="nowPlayingVarId" type="menu" alwaysUseInDialogHeightCalc="true">
             <Label>Now Playing Variable:</Label>
-            <List class="self" method="nowPlayingVariables" dynamicReload="true"/>
+            <List class="self" method="now_playing_variables" dynamicReload="true"/>
         </Field>
         </ConfigUI>
         <States>
