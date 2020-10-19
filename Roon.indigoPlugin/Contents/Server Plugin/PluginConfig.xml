@@ -8,7 +8,7 @@
         <Label>Copyright © 2019 Autolog</Label>
     </Field>
     <Field id="separator-1" type="separator" alwaysUseInDialogHeightCalc="true"/> 
-    <Field id="header-1" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+    <Field id="header-1" type="label" fontColor="green" alwaysUseInDialogHeightCalc="true">
         <Label>ROON CORE CONNECTION</Label>
     </Field>
 
@@ -27,6 +27,9 @@
     </Field>
  -->
     <Field id="separator-2" type="separator"/>  
+    <Field id="header-2" type="label" fontColor="green" alwaysUseInDialogHeightCalc="true">
+        <Label>VARIABLE FOLDER SETUP</Label>
+    </Field>
 
 
     <Field id="roonVariableFolderName" type="textfield" defaultValue="Roon">
@@ -37,7 +40,7 @@
     </Field>
 
     <Field id="separator-3" type="separator"/>  
-    <Field id="header-3" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+    <Field id="header-3" type="label" fontColor="green" alwaysUseInDialogHeightCalc="true">
         <Label>DEVICE AUTO-CREATE</Label>
     </Field>
     <Field type="checkbox" id="autoCreateDevices" default="false" alwaysUseInDialogHeightCalc="true">
@@ -52,7 +55,7 @@
     </Field>
 
     <Field id="separator-4" type="separator"/>  
-    <Field id="header-4" type="label" fontColor="blue" alwaysUseInDialogHeightCalc="true">
+    <Field id="header-4" type="label" fontColor="green" alwaysUseInDialogHeightCalc="true">
         <Label>Grouped Zones Dynamic-Rename</Label>
     </Field>
     <Field type="checkbox" id="dynamicGroupedZonesRename" default="true" alwaysUseInDialogHeightCalc="true">
@@ -63,8 +66,17 @@
         <Label> ^ This will dynamically rename an Indigo Roon Zone device which represents a group of Roon Outputs when the underlying Roon Zone display name changes. The device will be renamed to the lead Output in the group e.g. 'Roon Zone - Living Room + 1'. Default is checked (True).</Label>
     </Field>
 
-    <Field id="separator-5" type="separator" alwaysUseInDialogHeightCalc="true"/>  
-    <Field id="header-5" type="label"  fontColor="blue" alwaysUseInDialogHeightCalc="true">
+    <Field id="separator-6" type="separator" alwaysUseInDialogHeightCalc="true"/>
+    <Field id="header-6" type="label"  fontColor="green" alwaysUseInDialogHeightCalc="true">
+        <Label>DISPLAY TRACK PLAYING</Label>
+    </Field>
+    <Field type="checkbox" id="displayTrackPlayingInIndigoUi" default="true" alwaysUseInDialogHeightCalc="true">
+        <Label>Display Track Playing:</Label>
+        <Description>If checked will display the Track Name and Artist in the Indigo UI Notes field.</Description>
+    </Field>
+
+    <Field id="separator-7" type="separator" alwaysUseInDialogHeightCalc="true"/>
+    <Field id="header-7" type="label"  fontColor="green" alwaysUseInDialogHeightCalc="true">
         <Label>LOGGING LEVELS</Label>
     </Field>
 

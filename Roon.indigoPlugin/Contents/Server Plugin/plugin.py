@@ -88,6 +88,7 @@ class Plugin(indigo.PluginBase):
         self.globals[K_CONFIG][K_ROON_DEVICE_FOLDER_NAME] = ""
         self.globals[K_CONFIG][K_ROON_DEVICE_FOLDER_ID] = 0 
         self.globals[K_CONFIG][K_ROON_CORE_IP_ADDRESS] = ""
+        self.globals[K_CONFIG][K_DISPLAY_TRACK_PLAYING] = False
                
         # Initialise dictionary to store internal details about Roon
         self.globals[K_ROON] = dict()
@@ -252,6 +253,9 @@ class Plugin(indigo.PluginBase):
             self.logger.debug(u"Roon Variable Folder Id: {0}, Roon Variable Folder Name: {1}"
                               .format(self.globals[K_CONFIG][K_ROON_VARIABLE_FOLDER_ID],
                                       self.globals[K_CONFIG][K_ROON_VARIABLE_FOLDER_NAME]))
+
+            # Display Track playing info in Indigo UI Notes field: True / False
+            self.globals[K_CONFIG][K_DISPLAY_TRACK_PLAYING] = values_dict.get("displayTrackPlayingInIndigoUi", False)
 
         except StandardError as e:
             self.logger.error(u"'closedPrefsConfigUi' error detected. Line '{0}' has error='{1}'"
@@ -1333,11 +1337,15 @@ class Plugin(indigo.PluginBase):
 
     def process_outputs_changed(self, event, changed_items):
         try:
+            self.logger.debug(u"'process_outputs_changed' - Changed Items = \n\n{0}\n\n.".format(changed_items))
+
             for output_id in changed_items:
-                if output_id == '1701b9ea8b0814189098501722daf1427ea9':
-                    tempOutputs = self.globals[K_ROON][K_API].outputs
-                    self.logger.debug(
-                        u"'process_outputs_changed' - ALL OUTPUTS = \n\n{0}\n\n.".format(tempOutputs))
+                # DEBUG START
+                # if output_id == 'hex number':
+                #     tempOutputs = self.globals[K_ROON][K_API].outputs
+                #     self.logger.debug(
+                #         u"'process_outputs_changed' - ALL OUTPUTS = \n\n{0}\n\n.".format(tempOutputs))
+                # DEBUG END
 
                 output_data = copy.deepcopy(self.globals[K_ROON][K_API].output_by_output_id(output_id))
                 processOutput_successful = self.process_output(output_id, output_data)
@@ -1632,7 +1640,10 @@ class Plugin(indigo.PluginBase):
 
     def process_roon_callback_state(self, event, changed_items):
         try:
-
+            # TODO: Remove code below!
+            # DEBUG START
+            # self.logger.error(u'PROCESS_ROON_CALLBACK_STATE: Event = {0}\n{0}\n'.format(event, changed_items))
+            # DEBUG END
             if event == 'zones_seek_changed':
                 self.process_zones_seek_changed(event, changed_items)
 
@@ -1674,6 +1685,8 @@ class Plugin(indigo.PluginBase):
 
     def process_zone(self, zone_id, zoneData):
         try:
+            self.logger.debug(u"PROCESS ZONE - ZONEDATA:\n{0}\n".format(zoneData))
+
             self.globals[K_ROON][K_ZONES][zone_id] = dict()
 
             self.globals[K_ROON][K_ZONES][zone_id][K_ZONE_ID] = ""
@@ -1732,7 +1745,10 @@ class Plugin(indigo.PluginBase):
                     self.globals[K_ROON][K_ZONES][zone_id][K_OUTPUTS] = dict()
                     outputCount = 0
                     outputsList = list()
+
                     for output in zoneValue:
+
+
                         outputCount += 1
                         self.globals[K_ROON][K_ZONES][zone_id][K_OUTPUTS][outputCount] = dict()
                         for outputKey, outputData in output.iteritems():
@@ -2218,7 +2234,7 @@ class Plugin(indigo.PluginBase):
                 if self.globals[K_ROON][K_OUTPUTS][output_id][K_DISPLAY_NAME] != '':  # < TEST LEAVING DISPLAY NAME UNALTERED
                     key_value_list.append({'key': 'display_name', 'value': self.globals[K_ROON][K_OUTPUTS][output_id][K_DISPLAY_NAME]})
 
-            if 'source_controls' in self.globals[K_ROON][K_OUTPUTS][output_id] and self.globals[K_ROON][K_OUTPUTS][output_id][K_SOURCE_CONTROLS_COUNT] > 0:
+            if K_SOURCE_CONTROLS in self.globals[K_ROON][K_OUTPUTS][output_id] and self.globals[K_ROON][K_OUTPUTS][output_id][K_SOURCE_CONTROLS_COUNT] > 0:
                 if output_dev.states['source_control_1_status'] != self.globals[K_ROON][K_OUTPUTS][output_id][K_SOURCE_CONTROLS][1][K_STATUS]:
                     key_value_list.append({'key': 'source_control_1_status', 'value': self.globals[K_ROON][K_OUTPUTS][output_id][K_SOURCE_CONTROLS][1][K_STATUS]})
                 if output_dev.states['source_control_1_display_name'] != self.globals[K_ROON][K_OUTPUTS][output_id][K_SOURCE_CONTROLS][1][K_DISPLAY_NAME]:
@@ -2236,7 +2252,7 @@ class Plugin(indigo.PluginBase):
                     key_value_list.append({'key': 'source_control_1_control_key', 'value': ''})
                     key_value_list.append({'key': 'source_control_1_supports_standby', 'value': False})
 
-            if 'volume' in self.globals[K_ROON][K_OUTPUTS][output_id] and len(self.globals[K_ROON][K_OUTPUTS][output_id][K_VOLUME]) > 0:
+            if K_VOLUME in self.globals[K_ROON][K_OUTPUTS][output_id] and len(self.globals[K_ROON][K_OUTPUTS][output_id][K_VOLUME]) > 0:
                 if output_dev.states['volume_hard_limit_min'] != self.globals[K_ROON][K_OUTPUTS][output_id][K_VOLUME][K_VOLUME_HARD_LIMIT_MIN]:
                     key_value_list.append({'key': 'volume_hard_limit_min', 'value': self.globals[K_ROON][K_OUTPUTS][output_id][K_VOLUME][K_VOLUME_HARD_LIMIT_MIN]})
                 if output_dev.states['volume_min'] != self.globals[K_ROON][K_OUTPUTS][output_id][K_VOLUME][K_VOLUME_MIN]:
@@ -2476,6 +2492,9 @@ class Plugin(indigo.PluginBase):
 
             if zone_dev.states['one_line_1'] != self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_ONE_LINE][K_LINE_1]:
                 key_value_list.append({'key': 'one_line_1', 'value': self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_ONE_LINE][K_LINE_1]})
+                track_title_changed = True
+            else:
+                track_title_changed = False
 
             if zone_dev.states['two_line_1'] != self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_TWO_LINE][K_LINE_1]:
                 key_value_list.append({'key': 'two_line_1', 'value': self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_TWO_LINE][K_LINE_1]})
@@ -2524,6 +2543,9 @@ class Plugin(indigo.PluginBase):
 
             if len(key_value_list) > 0:
                 zone_dev.updateStatesOnServer(key_value_list)
+                if self.globals[K_CONFIG][K_DISPLAY_TRACK_PLAYING] and track_title_changed:
+                    zone_dev.description = self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_ONE_LINE][K_LINE_1]
+                    zone_dev.replaceOnServer()
 
         except StandardError as err:
             self.logger.error(u"'update_roon_zone_device' error detected for device '{0}'. Line '{1}' has error='{2}'"
