@@ -89,50 +89,48 @@ class RoonApiWebSocket(threading.Thread):
 
     def on_message(self, ws, message=None):
         if not message:
-            message = ws # compatability fix because of change in websocket-client v0.49
+            message = ws  # compatability fix because of change in websocket-client v0.49
         try:
             message = message.decode('utf-8')
             lines = message.split("\n")
             header = lines[0]
             body = ""
+
+            request_id = None
+            line_with_request_id = [
+                line for line in lines if line.startswith("Request-Id")
+            ]
+            if line_with_request_id:
+                request_id = int(line_with_request_id[0].split("Request-Id: ")[1])
+
             if "Content-Type:" in message:
-                content_type = lines[1].split("Content-Type: ")[1]
-                request_id = int(lines[2].split("Request-Id: ")[1])
-                content_length = int(lines[3].split("Content-Length: ")[1])
-                body = "".join(lines[5:])
-            elif "Logging:" in message:
-                request_id = int(lines[2].split("Request-Id: ")[1])
-            else:
-                request_id = int(lines[1].split("Request-Id: ")[1])
+                # Roon uses a blank line after the header to indicate body.
+                # See https://github.com/RoonLabs/node-roon-api/blob/master/moomsg.js#L45
+                body = "".join(message.split("\n\n")[1:])
+            elif "Logging:" not in message:
                 body = header
             if body and "{" in body:
                 body = json.loads(body)
             # handle message
-            if ControlSource in header:
-                # incoming message for source_control endpoint
-                event = header.split("/")[-1]
-                if self.source_controls_callback:
-                   self.source_controls_callback(event, request_id, body)
-            elif ControlVolume in header:
-                # incoming message for volume_control endpoint
-                event = header.split("/")[-1]
-                if self.volume_controls_callback:
-                    self.volume_controls_callback(event, request_id, body)
-            elif ServicePing in header:
+            if ServicePing in header:
                 # reply to incoming ping from server
                 self.send_complete(request_id, "Success")
-            elif "Registered" in header:
-                if self.registered_calback:
-                    self.registered_calback(body)
+            elif REGISTERED in header:
+                self.registered_calback(body)
             elif request_id in self._subscriptions:
                 # this is callback for one of our subscriptions
                 self._subscriptions[request_id]["callback"](body)
             else:
                 # this is just a result for one of our requests
                 self._results[request_id] = body
-        except Exception as exc:
-            self.roonLogger.exception("Error while parsing message")
-            self.roonLogger.debug(message)
+
+        except ws.WebSocketConnectionClosedException:
+            # This can happen while closing a connection - so ignore
+            pass
+
+        except Exception:  # pylint: disable=broad-except
+            self.roonLogger.exception("Error while parsing message '%s'", message)
+
 
     def on_error(self, ws, error=None):
         if not error:

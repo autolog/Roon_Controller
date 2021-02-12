@@ -2491,7 +2491,7 @@ class Plugin(indigo.PluginBase):
                 key_value_list.append({'key': 'image_key', 'value': self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_IMAGE_KEY]})
 
             if zone_dev.states['one_line_1'] != self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_ONE_LINE][K_LINE_1]:
-                key_value_list.append({'key': 'one_line_1', 'value': self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_ONE_LINE][K_LINE_1]})
+                key_value_list.append({'key': 'one_line_1', 'value': u"UNICODE Tëst: {0}".format(self.globals[K_ROON][K_ZONES][zone_id][K_NOW_PLAYING][K_ONE_LINE][K_LINE_1])})
                 track_title_changed = True
             else:
                 track_title_changed = False

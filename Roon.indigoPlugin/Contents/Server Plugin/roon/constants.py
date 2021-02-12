@@ -15,6 +15,7 @@ MessageRequest      = "REQUEST"
 MessageComplete     = "COMPLETE"
 MessageContinue     = "CONTINUE"
 
+REGISTERED = "Registered"
 
 # logformat = logging.Formatter('%(asctime)-15s %(levelname)-5s  %(module)s -- %(message)s')
 # LOGGER = logging.getLogger("roonapi")
