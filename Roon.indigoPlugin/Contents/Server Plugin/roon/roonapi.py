@@ -457,7 +457,7 @@ class RoonApi():
     ############# private methods ##################
     
 
-    def __init__(self, appinfo, token=None, host=None, port=9100, blocking_init=True):
+    def __init__(self, appinfo, token=None, host=None, port=9300, blocking_init=True):
         '''
             Set up the connection with Roon
             appinfo: a dict of the required information about the app that should be connected to the api
@@ -533,7 +533,7 @@ class RoonApi():
         if self._token:
             appinfo["token"] = self._token
         if not self._token:
-            self.roonLogger.info("The application should be approved within Roon's settings.")
+            self.roonLogger.warning("The application should be approved within Roon's settings.")
         else:
             self.roonLogger.info("Registering the app with Roon...")
         self._roonsocket.send_request(ServiceRegistry + "/register", appinfo)

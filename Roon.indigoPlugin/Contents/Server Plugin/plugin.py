@@ -333,7 +333,9 @@ class Plugin(indigo.PluginBase):
                 if not os.path.exists(zone_image_folder):
                     try:
                         self.mkdir_with_mode(zone_image_folder)
-                    except FileExistsError:  # Handles the situation where the folder gets created by image processing in between the check and mkdir statements!
+                    except OSError, e:  # Handles the situation where the folder gets created by image processing in-between the check and mkdir statements!
+                        if e.errno != errno.EEXIST:
+                            pass
                         pass
                 else:
                     file_list = os.listdir(zone_image_folder)
