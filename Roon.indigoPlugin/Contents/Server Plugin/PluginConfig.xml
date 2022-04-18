@@ -5,7 +5,7 @@
         <Label>This Plugin controls a Roon audio system. 😄</Label>
     </Field>
     <Field id="copyright" type="label" alwaysUseInDialogHeightCalc="true">
-        <Label>Copyright © 2019 Autolog</Label>
+        <Label>Copyright © 2019-2022 Autolog</Label>
     </Field>
     <Field id="separator-1" type="separator" alwaysUseInDialogHeightCalc="true"/> 
     <Field id="header-1" type="label" fontColor="green" alwaysUseInDialogHeightCalc="true">
@@ -19,14 +19,14 @@
         <Label> ^ Specify the IP Address of the device running the Roon Core e.g. 192.168.0.20.</Label>
     </Field>
 
-<!--     <Field id="roonCorePort" type="textfield" defaultValue="">
+    <Field id="roonCorePort" type="textfield" defaultValue="">
         <Label>Roon Core Port:</Label>
     </Field>
     <Field id="help-1B" type="label" alignWithControl="true">
         <Label> ^ Specify the Port to connect to on the device running the Roon Core.</Label>
     </Field>
- -->
-    <Field id="separator-2" type="separator"/>  
+
+    <Field id="separator-2" type="separator"/>
     <Field id="header-2" type="label" fontColor="green" alwaysUseInDialogHeightCalc="true">
         <Label>VARIABLE FOLDER SETUP</Label>
     </Field>
@@ -39,7 +39,7 @@
         <Label> ^ Specify the name of the Indigo folder in which the plugin will list any pre-defined Roon now playing variables when editing a Roon device. Leave empty if the folder is not required. The default variable folder is 'Roon' and if required and missing, will be created.</Label>
     </Field>
 
-    <Field id="separator-3" type="separator"/>  
+    <Field id="separator-3" type="separator"/>
     <Field id="header-3" type="label" fontColor="green" alwaysUseInDialogHeightCalc="true">
         <Label>DEVICE AUTO-CREATE</Label>
     </Field>
@@ -54,7 +54,7 @@
         <Label> ^ Specify the name of the Indigo folder in which the plugin will create any Roon Zone or Roon Output devices, if DEVICE AUTO-CREATE is enabled. Default is 'Roon'.</Label>
     </Field>
 
-    <Field id="separator-4" type="separator"/>  
+    <Field id="separator-4" type="separator"/>
     <Field id="header-4" type="label" fontColor="green" alwaysUseInDialogHeightCalc="true">
         <Label>Grouped Zones Dynamic-Rename</Label>
     </Field>

@@ -1,73 +1,92 @@
-from __future__ import unicode_literals
-import threading
-import socket
+"""
+Module defining a class to discover Roon servers.
+
+If multiple servers are available on the network, the first to be discovered
+is selected. This may not be the one you have enabled the plugin for.
+"""
+
 import os.path
-from .constants import *
+import socket
+import threading
+
+from .soodmessage import FormatException, SOODMessage
+from .constants import SOOD_PORT, SOOD_MULTICAST_IP, LOGGER
+
 
 class RoonDiscovery(threading.Thread):
     """Class to discover Roon Servers connected in the network."""
-    _exit = threading.Event()
-    _discovered_callback = None
 
-    def __init__(self, callback):
-        self._discovered_callback = callback
+    def __init__(self, core_id=None):
+        """Discover Roon Servers connected in the network."""
+        self._exit = threading.Event()
+        self._core_id = core_id
         threading.Thread.__init__(self)
         self.daemon = True
 
     def run(self):
-        ''' run discovery untill server found '''
+        """Run discovery until server found."""
         while not self._exit.isSet():
-            host, port = self.first()
+            host, _ = self.first()
             if host:
-                self._discovered_callback(host, port)
                 self.stop()
 
     def stop(self):
+        """Stop scan."""
         self._exit.set()
 
     def all(self):
         """Scan and return all found entries as a list. Each server is a tuple of host,port."""
-        self.discover(first_only=False)
+        return self._discover(first_only=False)
 
     def first(self):
-        ''' returns first server that is found'''
+        """Return first server that is found."""
         all_servers = self._discover(first_only=True)
         return all_servers[0] if all_servers else (None, None)
 
+    # pylint: disable=too-many-locals
     def _discover(self, first_only=False):
-        """update the server entry with details"""
+        """Update the server entry with details."""
         this_dir = os.path.dirname(os.path.abspath(__file__))
         sood_file = os.path.join(this_dir, ".soodmsg")
-        with open(sood_file) as f:
-            msg = f.read()
+        with open(sood_file) as sood_query_file:
+            msg = sood_query_file.read()
         msg = msg.encode()
         entries = []
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        sock.settimeout(5)
-        sock.bind(('', 0))
-        try:
-            sock.sendto(msg, ('<broadcast>', 9003))
+
+        with socket.socket(
+            socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP
+        ) as sock:
+            sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 32)
+            sock.sendto(msg, (SOOD_MULTICAST_IP, SOOD_PORT))
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+            sock.sendto(msg, ("<broadcast>", SOOD_PORT))
+            sock.settimeout(5)
             while not self._exit.isSet():
                 try:
                     data, server = sock.recvfrom(1024)
-                    data = data.decode()
-                    lines = []
-                    for line in data.split("\n"):
-                        lines.extend(line.split("\x04"))
-                    if "SOOD" in lines[0] and len(lines) > 6 and "http_port" in lines[4]:
-                        # match for Roon server found!
-                        port = int(lines[5].encode("utf-8").strip())
-                        host = server[0]
-                        entries.append((host, port))
-                        if first_only:
-                            # we're only interested in the first server found
-                            break
+                    message = SOODMessage(data).as_dictionary
+
+                    host = server[0]
+                    port = message["properties"]["http_port"]
+                    unique_id = message["properties"]["unique_id"]
+                    LOGGER.debug("Discovered %s", message)
+
+                    if self._core_id is not None and self._core_id != unique_id:
+                        LOGGER.debug(
+                            "Ignoring server with id %s, because we're looking for %s",
+                            unique_id,
+                            self._core_id,
+                        )
+                        continue
+
+                    entries.append((host, port))
+                    if first_only:
+                        # we're only interested in the first server found
+                        break
                 except socket.timeout:
+                    LOGGER.debug("Timeout")
                     break
-                except Exception as exc:
-                    self.roonLogger.exception(exc)
-        finally:
-            sock.close()
+                except FormatException as format_exception:
+                    LOGGER.error("Format exception %s", format_exception.message)
+                    break
         return entries
-    
